@@ -1,0 +1,62 @@
+<section fxLayout="row wrap" fxLayoutAlign="center center" fxFill>
+    <mat-card fxFlex="800px" fxFlex.xs="100%">
+        <mat-card-title>Agrega un nuevo usuario</mat-card-title>
+        <form [formGroup]="formularioRegistro" 
+            (ngSubmit)="registrar()" 
+            fxLayout="column wrap"
+            fxLayoutAlign="center center" 
+            fxLayoutGap="10px">
+ 
+            <mat-card-content>
+                <mat-form-field appearance="outline" >
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="name" [(ngModel)]="formularioRegistro.name" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="hasError('name', 'required')"> El nombre es <strong>obligatorio</strong></mat-error>
+                    <mat-error [hidden]="!error.name">{{ error.name }}</mat-error>
+                    <mat-error *ngIf="formularioRegistro.get('password').errors?.serverError">
+                        {{ formularioRegistro.get('name').errors?.serverError }}
+                    </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" [(ngModel)]="formularioRegistro.email" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="hasError('email', 'email')">Ingrese un email válido</mat-error>
+                    <mat-error *ngIf="hasError('email', 'required')"> El email es <strong>obligatorio</strong></mat-error>
+                    <mat-error *ngIf="formularioRegistro.get('email').errors?.serverError">
+                        {{ formularioRegistro.get('email').errors?.serverError }}
+                    </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="password" [(ngModel)]="formularioRegistro.password" [errorStateMatcher]="matcher">
+                    <button type="button" mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+                        <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="hasError('password', 'required')">Ingrese una contraseña</mat-error>
+                    <mat-error *ngIf="formularioRegistro.get('password').errors?.serverError">
+                        {{ formularioRegistro.get('password').errors?.serverError }}
+                    </mat-error>
+                </mat-form-field>
+        
+                <mat-form-field appearance="outline">
+                    <mat-label>Confirma Contraseña</mat-label>
+                    <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="password_confirmation" [(ngModel)]="formularioRegistro.password_confirmation" [errorStateMatcher]="matcher">
+                    <button type="button" mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+                        <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="hasError('password_confirmation', 'required')">Ingrese una contraseña</mat-error>
+                    <mat-error *ngIf="formularioRegistro.get('password_confirmation').errors?.serverError">
+                        {{ formularioRegistro.get('password_confirmation').errors?.serverError }}
+                    </mat-error>
+                </mat-form-field>
+            </mat-card-content>
+
+            <mat-card-actions align="center">
+                <button  mat-raised-button color="primary" class="btn-block" type="submit" [disabled]="!formularioRegistro.valid">Agregar</button>
+                <button type="button" mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>    
+</section>

@@ -3,7 +3,7 @@
         <button mat-icon-button (click)="toggleSideBar()">
             <mat-icon>menu</mat-icon>
         </button>    
-        <span>LOGO</span>
+        <span>SIPLC</span>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
             <ul fxLayout="row" fxLayoutGap="20px">
@@ -22,7 +22,11 @@
                         <mat-icon>person_outline</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item routerLink="/perfil">
+                            <mat-icon>account_circle</mat-icon>
+                            Perfil
+                        </button>
+                        <button mat-menu-item href="#" (click)="logout($event)">
                             <mat-icon>exit_to_app</mat-icon>
                             Cerrar Sesión
                         </button>
